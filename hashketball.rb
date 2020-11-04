@@ -1,4 +1,4 @@
-# Write your code below game_hash
+require'pry'
 def game_hash
   {
     home: {
@@ -126,4 +126,108 @@ def game_hash
   }
 end
 
-# Write code here
+
+def num_points_scored(player_name)
+  game_hash.map { |team_key, team_value|
+    team_value[:players].map { |player_data|
+      player_data.map { |key, value|
+        if player_name == value 
+          return player_data[:points]
+        end
+      }
+    }
+  }
+end
+
+def shoe_size(player_name)
+  game_hash.map { |team_key, team_value|
+    team_value[:players].map { |player_data|
+      player_data.map { |key, value|
+        if player_name == value 
+          return player_data[:shoe]
+        end
+      }
+    }
+  }
+end
+
+def team_colors(team)
+  game_hash.map { |team_key, team_value|
+    team_value.map { |data_key, data_value|
+      if data_value == team
+        return team_value[:colors]
+      end
+    }
+  }
+end
+
+def team_names
+  ans = Array.new
+  game_hash.map { |team_key, team_value|
+    team_value.map { |data_key, data_value|
+      if data_key == :team_name
+        ans.push(data_value)
+      end
+    }
+  }
+  return ans
+end
+
+def player_numbers(team_name)
+  ans = Array.new
+  game_hash.map { |team_key, team_value|
+    team_value.map { |data_key, data_value|
+      if data_value == team_name
+        team_value[:players].map { |player_data|
+          ans.push(player_data[:number])
+        }
+      end
+    }
+  }
+  return ans
+end
+
+def player_stats(player_name)
+  game_hash.map { |team_key, team_value|
+    team_value[:players].map { |player_data|
+      player_data.map { |player_key, player_value|
+        if player_value == player_name
+          return player_data
+        end
+      }
+    }
+  }
+end
+
+def big_shoe_rebounds
+  lrgst = [nil, nil, 0]
+  game_hash.map { |team_key, team_value|
+    team_value[:players].map { |player_data|
+      player_data.map { |player_key, player_value|
+        if player_data[:shoe] > lrgst[2]
+          lrgst[0] = team_key
+          lrgst[1] = team_value[:players].index(player_data)
+          lrgst[2] = player_data[:shoe]
+        end
+      }
+    }
+  }
+  return game_hash[lrgst[0]][:players][lrgst[1]][:rebounds]
+end
+
+def most_points_scored
+  
+end
+
+def winning_team
+  
+end
+
+def player_with_longest_name
+  
+end
+
+def long_name_steals_a_ton?
+  
+end
+
